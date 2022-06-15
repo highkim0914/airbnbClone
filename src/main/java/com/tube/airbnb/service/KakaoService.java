@@ -1,13 +1,7 @@
 package com.tube.airbnb.service;
 
-import com.tube.airbnb.config.Constant;
-import com.tube.airbnb.dto.KakaoTokenRes;
 import com.tube.airbnb.utils.KakaoResponse;
-import io.jsonwebtoken.Jwts;
-import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
 import org.springframework.http.*;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -16,7 +10,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
-import static com.tube.airbnb.config.Constant.KAKAO_CLIENT_ID;
+import static com.tube.airbnb.config.secret.Secret.KAKAO_CLIENT_ID;
 
 @Service
 public class KakaoService {
