@@ -8,9 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
-import static com.tube.airbnb.config.Constant.KAKAO_CLIENT_ID;
+import static com.tube.airbnb.config.secret.Secret.KAKAO_CLIENT_ID;
 
 @Controller
 @RequestMapping("/kakao-login")
