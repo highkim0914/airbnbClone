@@ -1,6 +1,5 @@
 package com.tube.airbnb.controller;
 
-import com.tube.airbnb.exception.BaseException;
 import com.tube.airbnb.config.BaseResponse;
 import com.tube.airbnb.config.BaseResponseStatus;
 import com.tube.airbnb.dto.*;
@@ -9,16 +8,23 @@ import com.tube.airbnb.utils.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import static com.tube.airbnb.config.BaseResponseStatus.*;
+import static com.tube.airbnb.config.BaseResponseStatus.POST_USERS_EMPTY_EMAIL;
+import static com.tube.airbnb.config.BaseResponseStatus.POST_USERS_INVALID_EMAIL;
 import static com.tube.airbnb.utils.ValidationRegex.isRegexEmail;
 
 @RestController
 public class UserRestController {
-    @Autowired
+
     UserService userService;
 
-    @Autowired
+
     JwtService jwtService;
+
+    @Autowired
+    public UserRestController(UserService userService, JwtService jwtService) {
+        this.userService = userService;
+        this.jwtService = jwtService;
+    }
 
     @PostMapping("/users")
     public BaseResponse<PostUserRes> createUser(@RequestBody PostUserReq postUserReq){

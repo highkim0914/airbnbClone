@@ -1,26 +1,28 @@
 package com.tube.airbnb.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tube.airbnb.dto.*;
-import com.tube.airbnb.entity.House;
 import com.tube.airbnb.config.BaseResponse;
 import com.tube.airbnb.config.BaseResponseStatus;
+import com.tube.airbnb.dto.GetHouseInfoRes;
+import com.tube.airbnb.dto.PatchHouseReq;
+import com.tube.airbnb.dto.PostHouseReq;
+import com.tube.airbnb.dto.PostHouseRes;
 import com.tube.airbnb.service.HouseService;
-import com.tube.airbnb.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import static com.tube.airbnb.config.BaseResponseStatus.UPDATE_SUCCESS;
 
 @RestController
 @RequestMapping("/houses")
 public class HouseRestController {
-    @Autowired
     HouseService houseService;
+
+    @Autowired
+    public HouseRestController(HouseService houseService) {
+        this.houseService = houseService;
+    }
 
     @PostMapping
     public BaseResponse<PostHouseRes> createHouse(@RequestBody PostHouseReq postHouseReq){

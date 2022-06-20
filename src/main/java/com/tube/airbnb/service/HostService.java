@@ -1,12 +1,12 @@
 package com.tube.airbnb.service;
 
+import com.tube.airbnb.config.BaseResponseStatus;
 import com.tube.airbnb.dto.*;
+import com.tube.airbnb.entity.Host;
 import com.tube.airbnb.entity.House;
 import com.tube.airbnb.entity.Reservation;
-import com.tube.airbnb.exception.BaseException;
-import com.tube.airbnb.config.BaseResponseStatus;
-import com.tube.airbnb.entity.Host;
 import com.tube.airbnb.entity.User;
+import com.tube.airbnb.exception.BaseException;
 import com.tube.airbnb.repository.HostRepository;
 import com.tube.airbnb.repository.ReservationRepository;
 import com.tube.airbnb.utils.JwtService;
@@ -16,8 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Stack;
-import java.util.Vector;
 import java.util.stream.Collectors;
 
 import static com.tube.airbnb.config.BaseResponseStatus.INVALID_JWT;
@@ -25,20 +23,22 @@ import static com.tube.airbnb.config.BaseResponseStatus.INVALID_JWT;
 @Service
 public class HostService {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
-    StringBuilder sb;
-    StringBuffer sb2;
 
-    @Autowired
     HostRepository hostRepository;
 
-    @Autowired
     UserService userService;
 
-    @Autowired
     JwtService jwtService;
 
-    @Autowired
     ReservationRepository reservationRepository;
+
+    @Autowired
+    public HostService(HostRepository hostRepository, UserService userService, JwtService jwtService, ReservationRepository reservationRepository) {
+        this.hostRepository = hostRepository;
+        this.userService = userService;
+        this.jwtService = jwtService;
+        this.reservationRepository = reservationRepository;
+    }
 
     public Host getHost(long hostId) throws BaseException {
         return hostRepository.findById(hostId)

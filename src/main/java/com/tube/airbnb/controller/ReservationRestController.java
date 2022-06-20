@@ -5,7 +5,6 @@ import com.tube.airbnb.config.BaseResponseStatus;
 import com.tube.airbnb.dto.GetReservationRes;
 import com.tube.airbnb.dto.PostReservationReq;
 import com.tube.airbnb.dto.PostReservationRes;
-import com.tube.airbnb.entity.Reservation;
 import com.tube.airbnb.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +14,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/reservations")
 public class ReservationRestController {
-    @Autowired
     private ReservationService reservationService;
+
+    @Autowired
+    public ReservationRestController(ReservationService reservationService) {
+        this.reservationService = reservationService;
+    }
 
     @PostMapping
     public BaseResponse<PostReservationRes> createReservation(@RequestBody PostReservationReq postReservationReq){

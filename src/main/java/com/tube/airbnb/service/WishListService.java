@@ -1,11 +1,11 @@
 package com.tube.airbnb.service;
 
+import com.tube.airbnb.config.BaseResponseStatus;
 import com.tube.airbnb.dto.PostWishListReq;
 import com.tube.airbnb.dto.PostWishListRes;
-import com.tube.airbnb.exception.BaseException;
-import com.tube.airbnb.config.BaseResponseStatus;
 import com.tube.airbnb.entity.User;
 import com.tube.airbnb.entity.WishList;
+import com.tube.airbnb.exception.BaseException;
 import com.tube.airbnb.repository.WishListRepository;
 import com.tube.airbnb.utils.JwtService;
 import org.slf4j.Logger;
@@ -21,15 +21,19 @@ import static com.tube.airbnb.config.BaseResponseStatus.DUPLICATED_WISHLIST_TITL
 @Service
 public class WishListService {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
-    @Autowired
+
     private WishListRepository wishListRepository;
 
-    @Autowired
-    JwtService jwtService;
+    private JwtService jwtService;
 
-    @Autowired
     private UserService userService;
 
+    @Autowired
+    public WishListService(WishListRepository wishListRepository, JwtService jwtService, UserService userService) {
+        this.wishListRepository = wishListRepository;
+        this.jwtService = jwtService;
+        this.userService = userService;
+    }
 
     public List<WishList> findAllByJwtToken() {
         return findAllByUserId(jwtService.getUserIdx());

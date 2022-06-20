@@ -1,34 +1,35 @@
 package com.tube.airbnb.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tube.airbnb.dto.*;
-import com.tube.airbnb.entity.*;
+import com.tube.airbnb.config.BaseResponseStatus;
+import com.tube.airbnb.dto.GetHouseInfoRes;
+import com.tube.airbnb.dto.PatchHouseReq;
+import com.tube.airbnb.dto.PostHouseReq;
+import com.tube.airbnb.dto.PostHouseRes;
+import com.tube.airbnb.entity.Host;
+import com.tube.airbnb.entity.House;
 import com.tube.airbnb.entity.embedded.BasicHouseProperty;
 import com.tube.airbnb.exception.BaseException;
-import com.tube.airbnb.config.BaseResponseStatus;
 import com.tube.airbnb.repository.HouseRepository;
-import com.tube.airbnb.utils.JwtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class HouseService {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
-    @Autowired
+
     HouseRepository houseRepository;
 
-    @Autowired
     HostService hostService;
 
     @Autowired
-    JwtService jwtService;
+    public HouseService(HouseRepository houseRepository, HostService hostService) {
+        this.houseRepository = houseRepository;
+        this.hostService = hostService;
+    }
 
     public PostHouseRes createHouse(PostHouseReq postHouseReq) throws BaseException {
         long hostId = postHouseReq.getHostId();

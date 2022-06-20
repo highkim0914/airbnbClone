@@ -1,32 +1,34 @@
 package com.tube.airbnb.controller;
 
-import com.tube.airbnb.dto.PostWishListRes;
-import com.tube.airbnb.dto.WishListRes;
-import com.tube.airbnb.exception.BaseException;
 import com.tube.airbnb.config.BaseResponse;
 import com.tube.airbnb.config.BaseResponseStatus;
 import com.tube.airbnb.dto.PostWishListReq;
+import com.tube.airbnb.dto.PostWishListRes;
+import com.tube.airbnb.dto.WishListRes;
 import com.tube.airbnb.entity.User;
 import com.tube.airbnb.entity.WishHouse;
 import com.tube.airbnb.entity.WishList;
-import com.tube.airbnb.repository.UserRepository;
 import com.tube.airbnb.service.UserService;
 import com.tube.airbnb.service.WishListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/wishlists")
 public class WishListRestController {
-    @Autowired
+
     WishListService wishListService;
 
-    @Autowired
     UserService userService;
+
+    @Autowired
+    public WishListRestController(WishListService wishListService, UserService userService) {
+        this.wishListService = wishListService;
+        this.userService = userService;
+    }
 
     @GetMapping
     public BaseResponse<List<WishListRes>> getWishListsOfUser(){

@@ -1,9 +1,9 @@
 package com.tube.airbnb.service;
 
-import com.tube.airbnb.entity.Host;
-import com.tube.airbnb.exception.BaseException;
 import com.tube.airbnb.dto.*;
+import com.tube.airbnb.entity.Host;
 import com.tube.airbnb.entity.User;
+import com.tube.airbnb.exception.BaseException;
 import com.tube.airbnb.repository.UserRepository;
 import com.tube.airbnb.utils.JwtService;
 import com.tube.airbnb.utils.SHA256;
@@ -12,21 +12,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-
 import static com.tube.airbnb.config.BaseResponseStatus.*;
 
 @Service
 public class UserService {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
-    @Autowired
+
     UserRepository userRepository;
 
-    @Autowired
     JwtService jwtService;
 
     @Autowired
-    EntityManager entityManager;
+    public UserService(UserRepository userRepository, JwtService jwtService) {
+        this.userRepository = userRepository;
+        this.jwtService = jwtService;
+    }
 
     public GetUserRes getUser(long id) throws BaseException {
         checkJwtByUserId(id);

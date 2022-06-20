@@ -18,14 +18,20 @@ import java.util.stream.Collectors;
 
 @Service
 public class ReservationService {
-    @Autowired
+
     private ReservationRepository reservationRepository;
 
-    @Autowired
     private HouseRepository houseRepository;
 
-    @Autowired
     private UserService userService;
+
+    public ReservationService(ReservationRepository reservationRepository, HouseRepository houseRepository, UserService userService) {
+        this.reservationRepository = reservationRepository;
+        this.houseRepository = houseRepository;
+        this.userService = userService;
+    }
+
+    @Autowired
 
     public PostReservationRes createReservation(PostReservationReq postReservationReq) throws BaseException {
         User user = userService.findByUserId(postReservationReq.getUserId());
