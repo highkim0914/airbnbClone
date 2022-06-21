@@ -1,11 +1,11 @@
 package com.tube.airbnb.utils;
 
 import com.tube.airbnb.exception.BaseException;
-import com.tube.airbnb.config.secret.Secret;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -18,6 +18,8 @@ import static com.tube.airbnb.config.BaseResponseStatus.INVALID_JWT;
 
 @Service
 public class JwtService {
+    @Value("${spring.jwt.secret-key}")
+    private String secret_key;
 
     /*
     JWT 생성
@@ -31,7 +33,7 @@ public class JwtService {
                 .claim("userIdx",userIdx)
                 .setIssuedAt(now)
                 .setExpiration(new Date(System.currentTimeMillis()+(1000L *60*60*24*365)))
-                .signWith(SignatureAlgorithm.HS256, Secret.JWT_SECRET_KEY)
+                .signWith(SignatureAlgorithm.HS256, secret_key)
                 .compact();
     }
 
@@ -60,7 +62,7 @@ public class JwtService {
         Jws<Claims> claims;
         try{
             claims = Jwts.parser()
-                    .setSigningKey(Secret.JWT_SECRET_KEY)
+                    .setSigningKey(secret_key)
                     .parseClaimsJws(accessToken);
         } catch (Exception ignored) {
             throw new BaseException(INVALID_JWT);
