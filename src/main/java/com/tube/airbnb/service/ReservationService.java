@@ -25,13 +25,13 @@ public class ReservationService {
 
     private UserService userService;
 
+    @Autowired
     public ReservationService(ReservationRepository reservationRepository, HouseRepository houseRepository, UserService userService) {
         this.reservationRepository = reservationRepository;
         this.houseRepository = houseRepository;
         this.userService = userService;
     }
 
-    @Autowired
 
     public PostReservationRes createReservation(PostReservationReq postReservationReq) throws BaseException {
         User user = userService.findByUserId(postReservationReq.getUserId());
