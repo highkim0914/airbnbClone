@@ -21,3 +21,6 @@ spring:
     defer-datasource-initialization: true
   jackson:
     property-naming-strategy: SNAKE_CASE
+
+  jwt:
+    secret: SECRET_KEY
