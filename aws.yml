@@ -1,0 +1,44 @@
+name: deploy to aws ec2
+
+on:
+  push:
+    branches:
+      - "master"
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-20.04
+    environment: production
+
+    steps:
+      - name : checkout
+      - uses : actions/checkout@v3
+
+      - name : select java
+        uses : actions/setup-java@v3
+        with:
+          java-version : 11
+          distribution : 'adopt'
+          cache : 'gradle'
+
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
+        with:
+          arguments: clean build
+
+      - name : make zip file
+        run: zip -r ./clone.zip .
+
+      - name : upload to s3
+        run: aws s3 cp --region ${{ secrets.AWS_REGION }} ./clone.zip s3://${{ secrets.S3_BUCKET_NAME}}/clone.zip
+
+#      - name : deploy
+#        run: aws create-deployment --application-name ${{ secrets.AWS_APPLICATION_NAME }} --deployment-group-name ${{ secrets.AWS_DEPLOYMENT_GROUP_NAME }} --region ${{ secrets.AWS_REGION }}
+        # aws create-deployment --application-name clone-deploy --deployment-group-name deploy-group-1 --region ap-northeast-2 --revision -revisionType=S3 --s3-location bucket=s3-for-deploy-clone, key=clone.zip
