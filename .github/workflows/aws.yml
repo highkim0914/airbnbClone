@@ -45,8 +45,8 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name : upload to s3
-        run: aws s3 cp --region ${{ secrets.AWS_REGION }} ./clone.zip s3://${{ secrets.S3_BUCKET_NAME}}/clone.zip
+        run: aws s3 cp --region ${{ secrets.AWS_REGION }} ./clone.zip s3://${{ secrets.S3_BUCKET_NAME }}/clone.zip
 
-#      - name : deploy
-#        run: aws create-deployment --application-name ${{ secrets.AWS_APPLICATION_NAME }} --deployment-group-name ${{ secrets.AWS_DEPLOYMENT_GROUP_NAME }} --region ${{ secrets.AWS_REGION }}
+      - name : deploy
+        run: aws create-deployment --application-name ${{ secrets.AWS_APPLICATION_NAME }} --deployment-group-name ${{ secrets.AWS_DEPLOYMENT_GROUP_NAME }} --region ${{ secrets.AWS_REGION }}
         # aws create-deployment --application-name clone-deploy --deployment-group-name deploy-group-1 --region ap-northeast-2 --revision -revisionType=S3 --s3-location bucket=s3-for-deploy-clone, key=clone.zip
