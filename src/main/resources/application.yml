@@ -3,6 +3,9 @@ server:
     9000
 
 spring:
+  activate:
+    on-profile:
+      - local
   datasource:
     platform: mysql
     url: jdbc:mysql://localhost:3306/sampleairbnb
