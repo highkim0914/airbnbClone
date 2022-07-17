@@ -3,6 +3,9 @@ server:
     9000
 
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   activate:
     on-profile:
       - local
