@@ -39,3 +39,4 @@ out/
 ### jwt_secret_key ###
 src/main/java/com/tube/airbnb/config/secret/Secret.java
 /src/main/resources/config/application.yml
+!/.github/workflows/aws.yml
